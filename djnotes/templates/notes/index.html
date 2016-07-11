@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Notes{% endblock title %}
+
+{% block content %}
+{# Create new note form #}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="inline-form" action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="form-control clear-focus-highlight" id="txtNewTitle"
+                        name="title" placeholder="Title of the note?">
+                    <input type="text" class="form-control clear-focus-highlight" id="txtNewNote"
+                        name="note" placeholder="What is the note message?">
+                    <input class="btn btn-raised btn-primary btn-sm" type="submit" value="create">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{#Display Notes#}
+<div class="row">
+    {% for note in notes %}
+    <a href="{% url 'update' note.id %}">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{ note.title }}</strong>
+                </div>
+                <div class="panel-body">
+                    {{ note.note }}
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock content %}
